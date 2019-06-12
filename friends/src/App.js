@@ -1,7 +1,15 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { Route } from 'react-router-dom';
 
-function App() {
-	return <div className="App">welcome</div>;
+export class App extends Component {
+	constructor() {
+		super();
+		this.state = {
+			friends: []
+		};
+	}
+
+	render() {
+		return <div>Welcome</div>;
+	}
 }
-
-export default App;
