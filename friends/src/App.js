@@ -77,7 +77,7 @@ export class App extends Component {
 	};
 
 	editFriendDetails = id => {
-		console.log(id);
+		console.log('lkk');
 	};
 
 	render() {

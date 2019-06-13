@@ -6,6 +6,8 @@ import { Button } from './Button';
 export const Form = props => {
 	const { name, age, email, errors, inputChange, addNewFriend, updateFriend, closeForm, editMode } = props;
 
+	console.log(typeof age + 'dnkcskcn');
+
 	return (
 		<form>
 			<TextInput
@@ -51,7 +53,7 @@ export const Form = props => {
 
 Form.propTypes = {
 	name: PropTypes.string,
-	age: PropTypes.string,
+	age: PropTypes.number,
 	email: PropTypes.string,
 	errors: PropTypes.object,
 	inputChange: PropTypes.func.isRequired,

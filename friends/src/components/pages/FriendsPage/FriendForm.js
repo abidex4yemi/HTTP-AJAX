@@ -33,6 +33,14 @@ export class FriendForm extends Component {
 		this.baseURL = 'http://localhost:5000';
 	}
 
+	componentDidMount() {
+		// populate form input if edit mode is true
+		// Note: editMode is turned on if
+		// url path: /friends/edit/<id>
+		// and form input will be populated with friend data
+		this.populateFormInput();
+	}
+
 	validateInput = ({ name, email, age }) => {
 		let errors = {};
 
@@ -92,6 +100,24 @@ export class FriendForm extends Component {
 		}
 	};
 
+	populateFormInput = () => {
+		const { id } = this.props.match.params;
+
+		if (id) {
+			const findFriendById = this.props.friends.find(friend => friend.id === id);
+			const { name, email, age } = findFriendById;
+			this.setState(prevState => ({
+				editMode: !prevState.editMode,
+				form: {
+					name,
+					email,
+					age,
+					errors: {}
+				}
+			}));
+		}
+	};
+
 	updateFriend = () => {
 		console.log('update friend');
 	};
@@ -111,7 +137,6 @@ export class FriendForm extends Component {
 
 	render() {
 		const { form, editMode } = this.state;
-		const { id } = this.props.match.params;
 
 		return (
 			<React.Fragment>
