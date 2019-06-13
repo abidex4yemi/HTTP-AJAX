@@ -1,12 +1,11 @@
 import React from 'react';
 import uuid from 'uuid';
-import { Link } from 'react-router-dom';
 import { NavBar } from '../../Shared/NavBar/NavBar';
 import { Footer } from '../../Shared/Footer/Footer';
 import { Friends } from '../../Friends/Friends';
 import styled from 'styled-components';
 
-const FriendsPageStyles = styled.main`min-height: 85.8vh;`;
+const FriendsPageStyles = styled.main`min-height: 85.5vh;`;
 
 const ContainerStyles = styled.div`
 	max-width: 1000px;

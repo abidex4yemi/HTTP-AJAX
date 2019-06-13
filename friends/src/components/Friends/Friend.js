@@ -14,6 +14,10 @@ const FriendStyled = styled.div`
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
+
+	&:hover {
+		box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+	}
 `;
 
 const ActionsContainerStyled = styled.div`
@@ -23,11 +27,45 @@ const ActionsContainerStyled = styled.div`
 
 	a,
 	button {
-		width: 50%;
+		width: 40%;
+	}
+
+	a {
+		border: 0;
+		height: 40px;
+		color: #201c29;
+		font-size: 2rem;
+		border: 1px solid #ffc107;
+		text-decoration: none;
+		text-align: center;
+		line-height: 2;
+		transition: 0.2s;
+
+		&:hover {
+			background: #ffc107;
+			color: #fff;
+		}
+	}
+
+	button {
+		border: 1px solid #dc3545;
+
+		&:hover {
+			background: #dc3545;
+			color: #fff;
+		}
 	}
 `;
 
-const FriendDetails = styled.div`padding: 1rem;`;
+const FriendDetails = styled.div`
+	padding: 1rem;
+
+	h1,
+	h4,
+	p {
+		margin-bottom: 1.5rem;
+	}
+`;
 
 export const Friend = props => {
 	const { name, age, email, id, deleteFriend, path } = props;
@@ -45,7 +83,7 @@ export const Friend = props => {
 			</FriendDetails>
 			<ActionsContainerStyled>
 				<Link to={`${path}/edit/${id}`}>Edit</Link>
-				<Button labelText="Delete" delete type="button" onClick={handleDelete} />
+				<Button labelText="Delete" type="button" onClick={handleDelete} />
 			</ActionsContainerStyled>
 		</FriendStyled>
 	);

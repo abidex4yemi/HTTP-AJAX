@@ -1,13 +1,33 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import { TextInput } from './TextInput';
 import { Button } from './Button';
+
+const FormStyled = styled.form``;
+
+const ButtonContainer = styled.div`
+	display: flex;
+	justify-content: space-between;
+
+	button {
+		width: 45%;
+		border: 1px solid #201c29;
+		background: #201c29;
+		color: #fff;
+
+		&:hover {
+			background: #fff;
+			color: #201c29;
+		}
+	}
+`;
 
 export const Form = props => {
 	const { name, age, email, errors, inputChange, addNewFriend, updateFriend, closeForm, editMode } = props;
 
 	return (
-		<form>
+		<FormStyled>
 			<TextInput
 				type="text"
 				value={name}
@@ -38,14 +58,17 @@ export const Form = props => {
 				inputChange={inputChange}
 			/>
 			{editMode ? (
-				<Button labelText="Update Friend details" update type="button" onClick={updateFriend} />
+				<ButtonContainer>
+					<Button labelText="Update" type="button" onClick={updateFriend} />
+					<Button labelText="Cancel" type="button" onClick={closeForm} />
+				</ButtonContainer>
 			) : (
-				<React.Fragment>
-					<Button labelText="Cancel" cancel type="button" onClick={closeForm} />
-					<Button labelText="Add Friend" add type="button" onClick={addNewFriend} />
-				</React.Fragment>
+				<ButtonContainer>
+					<Button labelText="Cancel" type="button" onClick={closeForm} />
+					<Button labelText="Add Friend" type="button" onClick={addNewFriend} />
+				</ButtonContainer>
 			)}
-		</form>
+		</FormStyled>
 	);
 };
 

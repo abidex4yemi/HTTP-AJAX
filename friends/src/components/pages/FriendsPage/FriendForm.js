@@ -1,9 +1,28 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import uuid from 'uuid';
+import styled from 'styled-components';
 import { NavBar } from '../../Shared/NavBar/NavBar';
 import { Footer } from '../../Shared/Footer/Footer';
 import { Form } from '../../Form/Form';
+
+const ContainerStyled = styled.div`
+	max-width: 1000px;
+	margin: 0 auto;
+`;
+
+const Content = styled.div`
+	width: 300px;
+	margin: 200px auto;
+
+	h2 {
+		text-align: center;
+		margin-bottom: 20px;
+		font-size: 2rem;
+	}
+`;
+
+const FriendFormStyled = styled.main`min-height: 37vh;`;
 
 const navLinkArray = [
 	{
@@ -172,11 +191,11 @@ export class FriendForm extends Component {
 		return (
 			<React.Fragment>
 				<NavBar navLinkArray={navLinkArray} />
-				<main>
-					<div>
-						<div>
+				<FriendFormStyled>
+					<ContainerStyled>
+						<Content>
 							{editMode && <h2>Edit Friend</h2>}
-							{<h2>Add New Friend</h2>}
+							{!editMode && <h2>Add New Friend</h2>}
 
 							<Form
 								{...form}
@@ -186,9 +205,9 @@ export class FriendForm extends Component {
 								editMode={editMode}
 								updateFriend={this.updateFriend}
 							/>
-						</div>
-					</div>
-				</main>
+						</Content>
+					</ContainerStyled>
+				</FriendFormStyled>
 				<Footer />
 			</React.Fragment>
 		);
