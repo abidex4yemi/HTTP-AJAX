@@ -4,12 +4,10 @@ import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
 const NavBarStyles = styled.header`
-	height: 64px;
 	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-	background: #100e17;
-	display: flex;
-	display: flex;
-	align-items: center;
+	border-bottom: 1px solid #201c29;
+	background: #001628;
+	padding: 1.5rem 0;
 `;
 
 const ContainerStyles = styled.div`
@@ -22,11 +20,11 @@ const List = styled.ul`
 	padding: 0;
 	list-style: none;
 	display: flex;
+	justify-content: space-between;
 `;
 
 const ListItem = styled.li`
 	font-size: 2rem;
-	margin-right: 4rem;
 
 	a {
 		text-decoration: none;
