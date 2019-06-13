@@ -76,18 +76,34 @@ export class FriendsPage extends Component {
 	};
 
 	addNewFriend = () => {
+		const url = `${this.baseURL}/friends`;
+
 		const { name, email, age } = this.state.form;
 		const errors = this.validateInput({ name, email, age });
 
 		if (!Object.keys(errors).length) {
 			const newFriend = {
-				id: uuid(),
 				name: name,
 				email: email,
-				age: age
+				age: parseInt(age, 10)
 			};
 
-			// axios.post();
+			// Make a post REQUEST to the server and add new friend object
+			axios
+				.post(url, newFriend)
+				.then(res => {
+					this.setState(() => ({
+						friends: res.data,
+						form: {
+							name: '',
+							age: '',
+							email: '',
+							errors: {}
+						}
+					}));
+				})
+				.catch(err => err)
+				.finally(err => err);
 		}
 	};
 
@@ -104,14 +120,12 @@ export class FriendsPage extends Component {
 	};
 
 	inputChange = (field, value) => {
-		if (value.trim() !== '') {
-			this.setState(prevState => ({
-				form: {
-					...prevState.form,
-					[field]: value
-				}
-			}));
-		}
+		this.setState(prevState => ({
+			form: {
+				...prevState.form,
+				[field]: value
+			}
+		}));
 	};
 
 	render() {

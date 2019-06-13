@@ -27,7 +27,7 @@ Friend.propTypes = {
 		name: PropTypes.string.isRequired,
 		age: PropTypes.number.isRequired,
 		email: PropTypes.string.isRequired,
-		id: PropTypes.number.isRequired,
+		id: PropTypes.string.isRequired,
 		changeFormToEditMode: PropTypes.func.isRequired,
 		deleteFriend: PropTypes.func.isRequired
 	})
