@@ -97,7 +97,7 @@ export class FriendForm extends Component {
 	};
 
 	closeForm = () => {
-		console.log('close');
+		this.props.history.push('/friends');
 	};
 
 	inputChange = (field, value) => {
