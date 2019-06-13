@@ -19,8 +19,8 @@ const navLinkArray = [
 ];
 
 export class FriendForm extends Component {
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
 		this.state = {
 			form: {
 				name: '',
@@ -74,7 +74,7 @@ export class FriendForm extends Component {
 			// Make a post REQUEST to the server and add new friend object
 			axios
 				.post(url, newFriend)
-				.then(() => {
+				.then(res => {
 					this.setState(() => ({
 						form: {
 							name: '',
@@ -83,6 +83,9 @@ export class FriendForm extends Component {
 							errors: {}
 						}
 					}));
+
+					this.props.updateFriends(res.data);
+					this.props.history.push('/friends');
 				})
 				.catch(err => err)
 				.finally(err => err);
@@ -109,7 +112,6 @@ export class FriendForm extends Component {
 	render() {
 		const { form, editMode } = this.state;
 		const { id } = this.props.match.params;
-		console.log(editMode);
 
 		return (
 			<React.Fragment>

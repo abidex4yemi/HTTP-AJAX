@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import uuid from 'uuid';
 import axios from 'axios';
-import { Route, Redirect } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import { HomePage } from './components/pages/Homepage/HomePage';
 import { FriendsPage } from './components/pages/FriendsPage/FriendsPage';
 import { FriendForm } from './components/pages/FriendsPage/FriendForm';
@@ -43,6 +43,12 @@ export class App extends Component {
 		const url = `${this.baseURL}/friends`;
 		this.getAllFriends(url);
 	}
+
+	updateFriends = data => {
+		this.setState(() => ({
+			friends: data
+		}));
+	};
 
 	getAllFriends = url => {
 		axios
@@ -108,6 +114,7 @@ export class App extends Component {
 									friends={friends}
 									editFriendDetails={this.editFriendDetails}
 									deleteFriend={this.deleteFriend}
+									updateFriends={this.updateFriends}
 								/>
 							)}
 						/>
