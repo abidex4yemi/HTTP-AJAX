@@ -4,7 +4,7 @@ import { TextInput } from './TextInput';
 import { Button } from './Button';
 
 export const Form = props => {
-	const { name, age, email, errors, inputChange, addNewFriend, updateFriend, editMode } = props;
+	const { name, age, email, errors, inputChange, addNewFriend, updateFriend, closeForm, editMode } = props;
 
 	return (
 		<form>
@@ -40,7 +40,10 @@ export const Form = props => {
 			{editMode ? (
 				<Button labelText="Update Friend details" update type="button" onClick={updateFriend} />
 			) : (
-				<Button labelText="Add Friend" add type="button" onClick={addNewFriend} />
+				<React.Fragment>
+					<Button labelText="Cancel" cancel type="button" onClick={closeForm} />
+					<Button labelText="Add Friend" add type="button" onClick={addNewFriend} />
+				</React.Fragment>
 			)}
 		</form>
 	);
@@ -53,5 +56,6 @@ Form.propTypes = {
 	errors: PropTypes.object,
 	inputChange: PropTypes.func.isRequired,
 	updateFriend: PropTypes.func.isRequired,
-	editMode: PropTypes.bool.isRequired
+	editMode: PropTypes.bool.isRequired,
+	closeForm: PropTypes.func.isRequired
 };

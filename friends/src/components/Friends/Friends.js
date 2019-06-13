@@ -3,13 +3,20 @@ import PropTypes from 'prop-types';
 import { Friend } from './Friend';
 
 export const Friends = props => {
-	const { friends, deleteFriend, changeFormToEditMode } = props;
+	const { friends, deleteFriend, editFriendDetails } = props;
+	const { path } = props.match;
 
 	return (
 		<section>
 			{friends.map(friend => {
 				return (
-					<Friend key={friend.id} {...friend} deleteFriend={deleteFriend} changeFormToEditMode={changeFormToEditMode} />
+					<Friend
+						key={friend.id}
+						{...friend}
+						deleteFriend={deleteFriend}
+						editFriendDetails={editFriendDetails}
+						path={path}
+					/>
 				);
 			})}
 		</section>
@@ -26,5 +33,5 @@ Friends.propTypes = {
 		})
 	),
 	deleteFriend: PropTypes.func.isRequired,
-	changeFormToEditMode: PropTypes.func.isRequired
+	editFriendDetails: PropTypes.func.isRequired
 };
