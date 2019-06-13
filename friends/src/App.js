@@ -1,55 +1,29 @@
-import React, { Component } from 'react';
-import axios from 'axios';
+import React from 'react';
 import uuid from 'uuid';
 import { Route } from 'react-router-dom';
+import { HomePage } from './components/pages/Homepage/HomePage';
+import { FriendsPage } from './components/pages/FriendsPage/FriendsPage';
 
-// Home page routes data
+// page routes data
 const routeDetails = [
 	{
 		id: uuid(),
 		path: '/',
-		ComponentToRender: ''
+		ComponentToRender: HomePage
 	},
 	{
 		id: uuid(),
 		path: '/friends',
-		ComponentToRender: ''
+		ComponentToRender: FriendsPage
 	}
 ];
 
-export class App extends Component {
-	constructor() {
-		super();
-		this.state = {
-			friends: []
-		};
-	}
-
-	getAllFriends = url => {
-		axios
-			.get(url)
-			.then(res => res.json())
-			.then(res => {
-				this.setState(() => ({ friends: res.dat }));
-			})
-			.catch(err => err)
-			.finally(err => err);
-	};
-
-	componentDidMount() {
-		const url = 'http://localhost:500/friends';
-		this.getAllFriends(url);
-	}
-
-	render() {
-		const { friends } = this.state;
-
-		return (
-			<React.Fragment>
-				{routeDetails.map(({ id, path, ComponentToRender }) => (
-					<Route key={id} exact path={path} render={props => <ComponentToRender {...props} friends={friends} />} />
-				))}
-			</React.Fragment>
-		);
-	}
-}
+export const App = () => {
+	return (
+		<React.Fragment>
+			{routeDetails.map(({ id, path, ComponentToRender }) => (
+				<Route key={id} exact path={path} render={props => <ComponentToRender {...props} />} />
+			))}
+		</React.Fragment>
+	);
+};
