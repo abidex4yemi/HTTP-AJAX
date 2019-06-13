@@ -122,22 +122,23 @@ export class FriendForm extends Component {
 
 	populateFormInput = () => {
 		const { id } = this.props.match.params;
+		const findFriendById = this.props.friends.find(friend => friend.id === id);
 
-		if (id) {
-			const findFriendById = this.props.friends.find(friend => friend.id === id);
-			const { name, email, age } = findFriendById;
-
-			this.setState(prevState => ({
-				editMode: !prevState.editMode,
-				friendID: id,
-				form: {
-					name,
-					email,
-					age,
-					errors: {}
-				}
-			}));
+		if (typeof findFriendById === 'undefined') {
+			return this.props.history.push('/friends');
 		}
+
+		const { name, email, age } = findFriendById;
+		this.setState(prevState => ({
+			editMode: !prevState.editMode,
+			friendID: id,
+			form: {
+				name,
+				email,
+				age,
+				errors: {}
+			}
+		}));
 	};
 
 	updateFriend = () => {

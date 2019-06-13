@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import uuid from 'uuid';
 import axios from 'axios';
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { HomePage } from './components/pages/Homepage/HomePage';
 import { FriendsPage } from './components/pages/FriendsPage/FriendsPage';
 import { FriendForm } from './components/pages/FriendsPage/FriendForm';
+import { NotFound } from './components/pages/NotFound/NotFound';
 
 // page routes data
 const routeDetails = [
@@ -27,6 +28,11 @@ const routeDetails = [
 		id: uuid(),
 		path: '/friends/edit/:id',
 		ComponentToRender: FriendForm
+	},
+	{
+		id: uuid(),
+		path: '',
+		ComponentToRender: NotFound
 	}
 ];
 
@@ -76,15 +82,11 @@ export class App extends Component {
 		});
 	};
 
-	editFriendDetails = id => {
-		console.log('lkk');
-	};
-
 	render() {
 		const { friends } = this.state;
 
 		return (
-			<React.Fragment>
+			<Switch>
 				{routeDetails.map(({ id, path, ComponentToRender }) => {
 					if (path === '/friends') {
 						return (
@@ -92,14 +94,7 @@ export class App extends Component {
 								key={id}
 								exact
 								path={path}
-								render={props => (
-									<ComponentToRender
-										{...props}
-										friends={friends}
-										editFriendDetails={this.editFriendDetails}
-										deleteFriend={this.deleteFriend}
-									/>
-								)}
+								render={props => <ComponentToRender {...props} friends={friends} deleteFriend={this.deleteFriend} />}
 							/>
 						);
 					}
@@ -120,7 +115,7 @@ export class App extends Component {
 						/>
 					);
 				})}
-			</React.Fragment>
+			</Switch>
 		);
 	}
 }

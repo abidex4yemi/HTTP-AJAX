@@ -38,6 +38,5 @@ Friends.propTypes = {
 			email: PropTypes.string.isRequired
 		})
 	),
-	deleteFriend: PropTypes.func.isRequired,
-	editFriendDetails: PropTypes.func.isRequired
+	deleteFriend: PropTypes.func.isRequired
 };

@@ -95,7 +95,6 @@ Friend.propTypes = {
 		age: PropTypes.number.isRequired,
 		email: PropTypes.string.isRequired,
 		id: PropTypes.string.isRequired,
-		editFriendDetails: PropTypes.func.isRequired,
 		deleteFriend: PropTypes.func.isRequired
 	})
 };
