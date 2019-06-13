@@ -28,7 +28,8 @@ export class FriendForm extends Component {
 				age: '',
 				errors: {}
 			},
-			editMode: false
+			editMode: false,
+			friendID: null
 		};
 		this.baseURL = 'http://localhost:5000';
 	}
@@ -106,8 +107,10 @@ export class FriendForm extends Component {
 		if (id) {
 			const findFriendById = this.props.friends.find(friend => friend.id === id);
 			const { name, email, age } = findFriendById;
+
 			this.setState(prevState => ({
 				editMode: !prevState.editMode,
+				friendID: id,
 				form: {
 					name,
 					email,
@@ -119,7 +122,35 @@ export class FriendForm extends Component {
 	};
 
 	updateFriend = () => {
-		console.log('update friend');
+		const { friendID, form } = this.state;
+		const { name, email, age } = form;
+		const url = `${this.baseURL}/friends/${friendID}`;
+
+		// update friends data
+		const updatedFriend = {
+			id: friendID,
+			name,
+			email,
+			age
+		};
+
+		axios
+			.put(url, updatedFriend)
+			.then(res => {
+				this.setState(() => ({
+					form: {
+						name: '',
+						age: '',
+						email: '',
+						errors: {}
+					}
+				}));
+
+				this.props.updateFriends(res.data);
+				this.props.history.push('/friends');
+			})
+			.catch(err => err)
+			.finally(err => err);
 	};
 
 	closeForm = () => {

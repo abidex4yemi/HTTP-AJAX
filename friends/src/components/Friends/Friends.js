@@ -28,7 +28,6 @@ Friends.propTypes = {
 		PropTypes.shape({
 			id: PropTypes.string.isRequired,
 			name: PropTypes.string.isRequired,
-			age: PropTypes.number.isRequired,
 			email: PropTypes.string.isRequired
 		})
 	),
