@@ -1,19 +1,38 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import uuid from 'uuid';
-import { Route } from 'react-router-dom';
+import axios from 'axios';
+import { Route, Switch } from 'react-router-dom';
+import { HomePage } from './components/pages/Homepage/HomePage';
+import { FriendsPage } from './components/pages/FriendsPage/FriendsPage';
+import { FriendForm } from './components/pages/FriendsPage/FriendForm';
+import { NotFound } from './components/pages/NotFound/NotFound';
 
-// Home page routes data
+// page routes data
 const routeDetails = [
 	{
 		id: uuid(),
 		path: '/',
-		ComponentToRender: ''
+		ComponentToRender: HomePage
 	},
 	{
 		id: uuid(),
 		path: '/friends',
-		ComponentToRender: ''
+		ComponentToRender: FriendsPage
+	},
+	{
+		id: uuid(),
+		path: '/friends/add',
+		ComponentToRender: FriendForm
+	},
+	{
+		id: uuid(),
+		path: '/friends/edit/:id',
+		ComponentToRender: FriendForm
+	},
+	{
+		id: uuid(),
+		path: '',
+		ComponentToRender: NotFound
 	}
 ];
 
@@ -23,33 +42,80 @@ export class App extends Component {
 		this.state = {
 			friends: []
 		};
+		this.baseURL = 'http://localhost:5000';
 	}
+
+	componentDidMount() {
+		const url = `${this.baseURL}/friends`;
+		this.getAllFriends(url);
+	}
+
+	updateFriends = data => {
+		this.setState(() => ({
+			friends: data
+		}));
+	};
 
 	getAllFriends = url => {
 		axios
 			.get(url)
-			.then(res => res.json())
 			.then(res => {
-				this.setState(() => ({ friends: res.dat }));
+				this.setState(() => ({ friends: res.data }));
 			})
 			.catch(err => err)
 			.finally(err => err);
 	};
 
-	componentDidMount() {
-		const url = 'http://localhost:500/friends';
-		this.getAllFriends(url);
-	}
+	deleteFriend = id => {
+		this.setState(prevState => {
+			const friend = prevState.friends.find(friend => friend.id === id);
+			if (friend) {
+				const url = `${this.baseURL}/friends/${friend.id}`;
+				axios
+					.delete(url)
+					.then(res => {
+						this.setState(() => ({ friends: res.data }));
+					})
+					.catch(err => err)
+					.finally(err => err);
+			}
+		});
+	};
 
 	render() {
 		const { friends } = this.state;
 
 		return (
-			<React.Fragment>
-				{routeDetails.map(({ id, path, ComponentToRender }) => (
-					<Route key={id} exact path={path} render={props => <ComponentToRender {...props} friends={friends} />} />
-				))}
-			</React.Fragment>
+			<Switch>
+				{routeDetails.map(({ id, path, ComponentToRender }) => {
+					if (path === '/friends') {
+						return (
+							<Route
+								key={id}
+								exact
+								path={path}
+								render={props => <ComponentToRender {...props} friends={friends} deleteFriend={this.deleteFriend} />}
+							/>
+						);
+					}
+					return (
+						<Route
+							key={id}
+							exact
+							path={path}
+							render={props => (
+								<ComponentToRender
+									{...props}
+									friends={friends}
+									editFriendDetails={this.editFriendDetails}
+									deleteFriend={this.deleteFriend}
+									updateFriends={this.updateFriends}
+								/>
+							)}
+						/>
+					);
+				})}
+			</Switch>
 		);
 	}
 }
